@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spik | School Management System</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            sidebar: '#FFFFFF',
+            mainBg: '#F8F9FD',
+            spikPurple: '#7C3AED',
+            spikPurpleLight: '#F3E8FF',
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    .dashboard-card {
+      background-color: #FFFFFF;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.025);
+    }
+    .metric-card {
+      border-radius: 18px;
+      transition: transform 0.2s ease;
+    }
+    .metric-card:hover {
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body class="bg-[#F8F9FD] font-sans antialiased text-slate-700 min-h-screen flex flex-col justify-between">
+
+  <!-- Header / Navigation (Increased height & text size) -->
+  <header class="border-b border-slate-100 bg-white sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-9 h-20 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="flex items-center gap-3 shrink-0">
+        <div class="w-10 h-10 rounded-xl bg-purple-600 flex items-center justify-center text-white shadow-md shadow-purple-200">
+          <i data-lucide="flower-2" class="w-6 h-6"></i>
+        </div>
+        <span class="text-2xl font-extrabold tracking-tight text-slate-800">sp!k</span>
+      </a>
+
+      <!-- Navigation Links (+4px sizing boost) -->
+      <nav class="hidden md:flex items-center gap-7 text-sm font-semibold text-slate-600">
+        <a href="index.html" class="text-purple-600 font-bold">Home</a>
+        <a href="#about" class="hover:text-purple-600 transition-colors">About Us</a>
+        <a href="#academics" class="hover:text-purple-600 transition-colors">Academics</a>
+        <a href="#campus" class="hover:text-purple-600 transition-colors">Campus Life</a>
+        <a href="#portals" class="hover:text-purple-600 transition-colors">Portals</a>
+        <a href="#faq" class="hover:text-purple-600 transition-colors">Parent FAQ</a>
+      </nav>
+
+      <!-- Action Buttons (+4px sizing boost) -->
+      <div class="flex items-center gap-3 shrink-0">
+        <a href="login.html" class="px-5 py-2.5 rounded-full border border-slate-200 text-slate-800 text-xs font-bold hover:bg-slate-50 hover:border-purple-600 hover:text-purple-600 transition-all flex items-center gap-2">
+          <i data-lucide="user-check" class="w-4 h-4 text-purple-600"></i> Parent Login
+        </a>
+        <a href="#admission" class="px-5 py-2.5 bg-purple-600 text-white text-xs font-bold rounded-full shadow-md shadow-purple-200 hover:bg-purple-700 transition-all flex items-center gap-2">
+          <i data-lucide="graduation-cap" class="w-4 h-4"></i> Online Admission
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main class="flex-1 space-y-14">
+    <section class="pt-14 pb-8 px-9 max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-9 items-center">
+        
+        <!-- Left Column: Vision & Actions -->
+        <div class="lg:col-span-7 space-y-6">
+          <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-[#F3E8FF] text-purple-600 text-sm font-bold">
+            <i data-lucide="award" class="w-5 h-5"></i>
+            <span>Admissions Open for Session 2026-2027</span>
+          </div>
+          
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-800 tracking-tight leading-tight">
+            Nurturing Minds, Building Character & <span class="text-purple-600">Future Leaders</span>
+          </h1>
+          
+          <p class="text-slate-500 text-sm md:text-base font-medium leading-relaxed max-w-xl">
+            Welcome to Spik Academy. We provide a world-class environment where academic excellence, moral values, modern technology, and personal growth come together to empower your child.
+          </p>
+
+          <div class="flex flex-wrap items-center gap-4 pt-2">
+            <a href="#admission" class="px-8 py-4 bg-purple-600 text-white text-sm font-bold rounded-full shadow-lg shadow-purple-200 hover:bg-purple-700 transition-all flex items-center gap-2.5">
+              Apply for Admission <i data-lucide="arrow-right" class="w-5 h-5"></i>
+            </a>
+            <a href="login.html" class="px-8 py-4 bg-white text-slate-800 text-sm font-bold rounded-full border border-slate-200 hover:border-purple-600 hover:text-purple-600 transition-all flex items-center gap-2 shadow-sm">
+              <i data-lucide="lock" class="w-5 h-5 text-purple-600"></i> Parent Portal Login
+            </a>
+          </div>
+        </div>
+
+        <!-- Right Column: Campus Showcase Card -->
+        <div class="lg:col-span-5 relative">
+          <div class="dashboard-card p-6 border border-slate-100 space-y-5">
+            <div class="flex items-center justify-between pb-3.5 border-b border-slate-100">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-2xl bg-[#F3E8FF] text-purple-600 flex items-center justify-center">
+                  <i data-lucide="shield-check" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h4 class="text-sm font-bold text-slate-800">Safe & Caring Environment</h4>
+                  <p class="text-xs text-slate-400 font-semibold">100% CCTV & Verified Staff</p>
+                </div>
+              </div>
+              <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+            </div>
+
+            <!-- Parent Information Points -->
+            <div class="space-y-3.5">
+              <div class="p-3.5 rounded-xl bg-[#F5EEF8] flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                  <i data-lucide="graduation-cap" class="w-4 h-4 text-purple-600"></i>
+                  <span class="text-xs font-bold text-slate-700">Student Success Rate</span>
+                </div>
+                <span class="text-sm font-extrabold text-slate-800">99.8%</span>
+              </div>
+
+              <div class="p-3.5 rounded-xl bg-[#E0F2FE] flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                  <i data-lucide="user-check" class="w-4 h-4 text-sky-500"></i>
+                  <span class="text-xs font-bold text-slate-700">Student-Teacher Ratio</span>
+                </div>
+                <span class="text-sm font-extrabold text-slate-800">15 : 1</span>
+              </div>
+
+              <div class="p-3.5 rounded-xl bg-[#DCFCE7] flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                  <i data-lucide="trophy" class="w-4 h-4 text-emerald-500"></i>
+                  <span class="text-xs font-bold text-slate-700">STEM & Sports Clubs</span>
+                </div>
+                <span class="text-sm font-extrabold text-slate-800">25+ Programs</span>
+              </div>
+            </div>
+
+            <div class="pt-2 flex items-center justify-between text-xs text-slate-400 font-bold">
+              <span>CBSE / Cambridge Standard</span>
+              <span class="text-purple-600">Co-Educational</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Key Campus Highlights -->
+    <section class="px-9 max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+        
+        <!-- Students -->
+        <div class="metric-card bg-[#F5EEF8] p-5 flex items-center justify-between">
+          <div class="space-y-1">
+            <span class="text-xs font-bold text-slate-500">Active Learners</span>
+            <h2 class="text-2xl font-extrabold text-slate-800">15.00K</h2>
+          </div>
+          <div class="w-12 h-12 rounded-2xl bg-white/90 flex items-center justify-center text-purple-600 shadow-sm">
+            <i data-lucide="graduation-cap" class="w-6 h-6"></i>
+          </div>
+        </div>
+
+        <!-- Teachers -->
+        <div class="metric-card bg-[#E0F2FE] p-5 flex items-center justify-between">
+          <div class="space-y-1">
+            <span class="text-xs font-bold text-slate-500">Expert Educators</span>
+            <h2 class="text-2xl font-extrabold text-slate-800">2.00K</h2>
+          </div>
+          <div class="w-12 h-12 rounded-2xl bg-white/90 flex items-center justify-center text-sky-500 shadow-sm">
+            <i data-lucide="user" class="w-6 h-6"></i>
+          </div>
+        </div>
+
+        <!-- Parents -->
+        <div class="metric-card bg-[#FFEDD5] p-5 flex items-center justify-between">
+          <div class="space-y-1">
+            <span class="text-xs font-bold text-slate-500">Satisfied Parents</span>
+            <h2 class="text-2xl font-extrabold text-slate-800">5.6K</h2>
+          </div>
+          <div class="w-12 h-12 rounded-2xl bg-white/90 flex items-center justify-center text-orange-500 shadow-sm">
+            <i data-lucide="users" class="w-6 h-6"></i>
+          </div>
+        </div>
+
+        <!-- Scholarships -->
+        <div class="metric-card bg-[#DCFCE7] p-5 flex items-center justify-between">
+          <div class="space-y-1">
+            <span class="text-xs font-bold text-slate-500">Scholarships Awarded</span>
+            <h2 class="text-2xl font-extrabold text-slate-800">$19.3K</h2>
+          </div>
+          <div class="w-12 h-12 rounded-2xl bg-white/90 flex items-center justify-center text-emerald-500 shadow-sm">
+            <i data-lucide="badge-dollar-sign" class="w-6 h-6"></i>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Why Choose Us Section for Parents -->
+    <section id="about" class="px-9 max-w-7xl mx-auto">
+      <div class="text-center mb-9 space-y-1.5">
+        <h2 class="text-xs font-bold text-purple-600 uppercase tracking-widest">Why Parents Trust Spik Academy</h2>
+        <h3 class="text-2xl md:text-3xl font-extrabold text-slate-800">A Safe, Smart & Holistic Learning Environment</h3>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <div class="dashboard-card p-6 space-y-3 border border-slate-100">
+          <div class="w-10 h-10 rounded-2xl bg-[#F3E8FF] text-purple-600 flex items-center justify-center">
+            <i data-lucide="shield" class="w-5 h-5"></i>
+          </div>
+          <h4 class="text-base font-bold text-slate-800">Campus Safety & Monitoring</h4>
+          <p class="text-xs text-slate-500 font-medium leading-relaxed">
+            Our campus is equipped with 24/7 CCTV surveillance, smart gate entry, automated attendance tracking, and verified transport GPS tracking for absolute peace of mind.
+          </p>
+        </div>
+
+        <div class="dashboard-card p-6 space-y-3 border border-slate-100">
+          <div class="w-10 h-10 rounded-2xl bg-[#E0F2FE] text-sky-500 flex items-center justify-center">
+            <i data-lucide="smartphone" class="w-5 h-5"></i>
+          </div>
+          <h4 class="text-base font-bold text-slate-800">Real-Time Parent Portal</h4>
+          <p class="text-xs text-slate-500 font-medium leading-relaxed">
+            Track your child’s daily attendance, homework assignments, exam results, teacher remarks, and fee invoice payments instantly through your dedicated smartphone portal.
+          </p>
+        </div>
+
+        <div class="dashboard-card p-6 space-y-3 border border-slate-100">
+          <div class="w-10 h-10 rounded-2xl bg-[#DCFCE7] text-emerald-500 flex items-center justify-center">
+            <i data-lucide="cpu" class="w-5 h-5"></i>
+          </div>
+          <h4 class="text-base font-bold text-slate-800">Future-Ready Curriculum</h4>
+          <p class="text-xs text-slate-500 font-medium leading-relaxed">
+            Alongside core academics, we integrate Coding, Artificial Intelligence, Robotics, Public Speaking, and Entrepreneurship starting from early primary grades.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Academics & Curriculum Levels -->
+    <section id="academics" class="px-9 max-w-7xl mx-auto">
+      <div class="dashboard-card p-7 border border-slate-100 space-y-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-slate-100">
+          <div>
+            <h3 class="text-xl font-extrabold text-slate-800">Academic Programs & Learning Levels</h3>
+            <p class="text-xs font-semibold text-slate-400 mt-1">Designed to support every developmental stage of your child</p>
+          </div>
+          <a href="#admission" class="px-5 py-2.5 bg-purple-600 text-white text-xs font-bold rounded-full shadow-md hover:bg-purple-700 transition-all flex items-center gap-2 self-start md:self-auto">
+            Apply Now <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div class="p-5 rounded-2xl bg-slate-50 border border-slate-100 space-y-2">
+            <div class="flex items-center gap-2 text-purple-600">
+              <i data-lucide="smile" class="w-4 h-4"></i>
+              <h4 class="text-xs font-bold text-slate-800">Kindergarten (KG 1-2)</h4>
+            </div>
+            <p class="text-xs font-medium text-slate-500 leading-relaxed">
+              Play-based learning, motor skill development, early phonics, and sensory exploration activities.
+            </p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-slate-50 border border-slate-100 space-y-2">
+            <div class="flex items-center gap-2 text-sky-500">
+              <i data-lucide="book-open" class="w-4 h-4"></i>
+              <h4 class="text-xs font-bold text-slate-800">Primary (Grade 1-5)</h4>
+            </div>
+            <p class="text-xs font-medium text-slate-500 leading-relaxed">
+              Core literacy, mathematics, environmental science, creative arts, and foundational computer skills.
+            </p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-slate-50 border border-slate-100 space-y-2">
+            <div class="flex items-center gap-2 text-orange-500">
+              <i data-lucide="layers" class="w-4 h-4"></i>
+              <h4 class="text-xs font-bold text-slate-800">Middle School (6-8)</h4>
+            </div>
+            <p class="text-xs font-medium text-slate-500 leading-relaxed">
+              STEM labs, advanced mathematics, foreign languages, social sciences, and competitive robotics clubs.
+            </p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-slate-50 border border-slate-100 space-y-2">
+            <div class="flex items-center gap-2 text-emerald-500">
+              <i data-lucide="award" class="w-4 h-4"></i>
+              <h4 class="text-xs font-bold text-slate-800">High School (9-12)</h4>
+            </div>
+            <p class="text-xs font-medium text-slate-500 leading-relaxed">
+              Advanced board preparations, university counseling, research projects, and career specialization tracks.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Role Portals Grid -->
+    <section id="portals" class="px-9 max-w-7xl mx-auto">
+      <div class="mb-6">
+        <h3 class="text-xs font-bold text-purple-600 uppercase tracking-widest">Portal Access</h3>
+        <h4 class="text-2xl font-extrabold text-slate-800 mt-1">Dedicated Logins for All Stakeholders</h4>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-5">
+        
+        <a href="login.html" class="dashboard-card p-6 flex flex-col justify-between hover:border-purple-600 border border-transparent transition-all group">
+          <div class="w-10 h-10 rounded-2xl bg-[#F3E8FF] text-purple-600 flex items-center justify-center mb-4">
+            <i data-lucide="shield" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h5 class="text-xs font-bold text-slate-800">Admin</h5>
+            <span class="text-xs font-semibold text-slate-400">System Portal</span>
+          </div>
+        </a>
+
+        <a href="login.html" class="dashboard-card p-6 flex flex-col justify-between hover:border-sky-400 border border-transparent transition-all group">
+          <div class="w-10 h-10 rounded-2xl bg-[#E0F2FE] text-sky-500 flex items-center justify-center mb-4">
+            <i data-lucide="user-check" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h5 class="text-xs font-bold text-slate-800">Teacher</h5>
+            <span class="text-xs font-semibold text-slate-400">Faculty Hub</span>
+          </div>
+        </a>
+
+        <a href="login.html" class="dashboard-card p-6 flex flex-col justify-between hover:border-purple-400 border border-transparent transition-all group">
+          <div class="w-10 h-10 rounded-2xl bg-[#F5EEF8] text-purple-600 flex items-center justify-center mb-4">
+            <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h5 class="text-xs font-bold text-slate-800">Student</h5>
+            <span class="text-xs font-semibold text-slate-400">Student Zone</span>
+          </div>
+        </a>
+
+        <a href="login.html" class="dashboard-card p-6 flex flex-col justify-between hover:border-orange-400 border border-transparent transition-all group border-2 border-purple-600/20 shadow-md">
+          <div class="w-10 h-10 rounded-2xl bg-[#FFEDD5] text-orange-500 flex items-center justify-center mb-4">
+            <i data-lucide="users" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h5 class="text-xs font-bold text-slate-800">Parent Access</h5>
+            <span class="text-xs font-semibold text-purple-600 font-bold">Child Tracking</span>
+          </div>
+        </a>
+
+        <a href="login.html" class="dashboard-card p-6 flex flex-col justify-between hover:border-emerald-400 border border-transparent transition-all group">
+          <div class="w-10 h-10 rounded-2xl bg-[#DCFCE7] text-emerald-500 flex items-center justify-center mb-4">
+            <i data-lucide="badge-dollar-sign" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h5 class="text-xs font-bold text-slate-800">Accountant</h5>
+            <span class="text-xs font-semibold text-slate-400">Fees & Payroll</span>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- Parent Testimonials Section -->
+    <section class="px-9 max-w-7xl mx-auto">
+      <div class="text-center mb-9 space-y-1.5">
+        <h2 class="text-xs font-bold text-purple-600 uppercase tracking-widest">Parent Feedback</h2>
+        <h3 class="text-2xl font-extrabold text-slate-800">What Our Parent Community Says</h3>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <div class="dashboard-card p-6 space-y-3 border border-slate-100">
+          <div class="flex items-center gap-1 text-amber-400">
+            <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+          </div>
+          <p class="text-xs font-medium text-slate-600 leading-relaxed italic">
+            "The Parent Portal makes it so easy to stay updated on my daughter’s attendance and report cards. I receive instant alerts for everything."
+          </p>
+          <div class="pt-3 border-t border-slate-100 flex items-center gap-3">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=80&q=80" class="w-8 h-8 rounded-full object-cover" />
+            <div>
+              <h5 class="text-xs font-bold text-slate-800">Sarah Jenkins</h5>
+              <span class="text-xs font-semibold text-slate-400">Parent of Grade 5 Student</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-card p-6 space-y-3 border border-slate-100">
+          <div class="flex items-center gap-1 text-amber-400">
+            <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+          </div>
+          <p class="text-xs font-medium text-slate-600 leading-relaxed italic">
+            "Spik Academy balances academic rigor with sports and robotics. The teachers are genuinely approachable and supportive."
+          </p>
+          <div class="pt-3 border-t border-slate-100 flex items-center gap-3">
+            <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=80&q=80" class="w-8 h-8 rounded-full object-cover" />
+            <div>
+              <h5 class="text-xs font-bold text-slate-800">David Miller</h5>
+              <span class="text-xs font-semibold text-slate-400">Parent of Grade 8 Student</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-card p-6 space-y-3 border border-slate-100">
+          <div class="flex items-center gap-1 text-amber-400">
+            <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+          </div>
+          <p class="text-xs font-medium text-slate-600 leading-relaxed italic">
+            "Paying fee invoices online and receiving instant PDF receipts saves so much time. Highly organized management system!"
+          </p>
+          <div class="pt-3 border-t border-slate-100 flex items-center gap-3">
+            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=80&q=80" class="w-8 h-8 rounded-full object-cover" />
+            <div>
+              <h5 class="text-xs font-bold text-slate-800">Diana Plenty</h5>
+              <span class="text-xs font-semibold text-slate-400">Parent of Grade 10 Student</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Admission Application Section -->
+    <section id="admission" class="px-9 max-w-7xl mx-auto">
+      <div class="dashboard-card p-9 bg-gradient-to-r from-purple-900 to-purple-600 text-white relative overflow-hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center relative z-10">
+          <div class="lg:col-span-8 space-y-3">
+            <span class="px-3.5 py-1 rounded-full bg-white/20 text-xs font-bold tracking-wider uppercase">Admissions Open</span>
+            <h3 class="text-2xl md:text-3xl font-extrabold leading-tight">Ready to Give Your Child the Best Educational Foundation?</h3>
+            <p class="text-purple-100 text-xs font-medium leading-relaxed max-w-xl">
+              Fill out our simple online admission form or schedule a campus visit with our admissions office.
+            </p>
+          </div>
+          <div class="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3">
+            <a href="login.html" class="px-6 py-3 bg-white text-purple-600 text-xs font-bold rounded-full shadow-md text-center hover:bg-purple-50 transition-all">
+              Apply Online Now
+            </a>
+            <a href="tel:+18005557745" class="px-6 py-3 bg-purple-800/60 border border-purple-400/40 text-white text-xs font-bold rounded-full text-center hover:bg-purple-800 transition-all flex items-center justify-center gap-2">
+              <i data-lucide="phone" class="w-4 h-4"></i> Call Admissions Office
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Accordion Section for Parents -->
+    <section id="faq" class="px-9 max-w-7xl mx-auto">
+      <div class="mb-6">
+        <h3 class="text-xs font-bold text-purple-600 uppercase tracking-widest">Parent Enquiries</h3>
+        <h4 class="text-2xl font-extrabold text-slate-800 mt-1">Frequently Asked Questions</h4>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="dashboard-card p-5 space-y-2 border border-slate-100">
+          <h5 class="text-xs font-bold text-slate-800 flex items-center gap-2">
+            <i data-lucide="help-circle" class="w-4 h-4 text-purple-600"></i>
+            What are the admission eligibility requirements?
+          </h5>
+          <p class="text-xs text-slate-500 font-medium leading-relaxed">
+            Admissions require the previous year's academic mark sheets, birth certificate, transfer certificate (if applicable), and a brief student interaction session.
+          </p>
+        </div>
+
+        <div class="dashboard-card p-5 space-y-2 border border-slate-100">
+          <h5 class="text-xs font-bold text-slate-800 flex items-center gap-2">
+            <i data-lucide="help-circle" class="w-4 h-4 text-purple-600"></i>
+            How can parents track daily attendance & results?
+          </h5>
+          <p class="text-xs text-slate-500 font-medium leading-relaxed">
+            Upon admission, parents receive individual credentials to log in to the Parent Portal (`/parent/dashboard`) to view live attendance, marks, and announcements.
+          </p>
+        </div>
+
+        <div class="dashboard-card p-5 space-y-2 border border-slate-100">
+          <h5 class="text-xs font-bold text-slate-800 flex items-center gap-2">
+            <i data-lucide="help-circle" class="w-4 h-4 text-purple-600"></i>
+            Is school transport available with safety tracking?
+          </h5>
+          <p class="text-xs text-slate-500 font-medium leading-relaxed">
+            Yes, our fleet of air-conditioned school buses covers major city routes, equipped with GPS tracking, speed governors, and trained female attendants.
+          </p>
+        </div>
+
+        <div class="dashboard-card p-5 space-y-2 border border-slate-100">
+          <h5 class="text-xs font-bold text-slate-800 flex items-center gap-2">
+            <i data-lucide="help-circle" class="w-4 h-4 text-purple-600"></i>
+            How can fee payments be made?
+          </h5>
+          <p class="text-xs text-slate-500 font-medium leading-relaxed">
+            Fees can be paid online via credit/debit card, bank transfer, or net banking through the Parent Portal, generating an instant downloadable PDF receipt.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-100 py-9 px-9 mt-14">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-7 pb-7 border-b border-slate-100 text-xs font-medium text-slate-500">
+      <div class="space-y-3">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-purple-600 flex items-center justify-center text-white">
+            <i data-lucide="flower-2" class="w-5 h-5"></i>
+          </div>
+          <span class="font-extrabold text-slate-800 text-2xl">sp!k</span>
+        </div>
+        <p class="text-slate-400 text-xs leading-relaxed">
+          Spik International Academy — Nurturing academic excellence, character building, and digital innovation for K-12 students.
+        </p>
+      </div>
+
+      <div>
+        <h5 class="font-bold text-slate-800 mb-3 uppercase tracking-wider text-xs">Quick Links</h5>
+        <ul class="space-y-2 text-xs font-semibold">
+          <li><a href="index.html" class="hover:text-purple-600">Academy Home</a></li>
+          <li><a href="#about" class="hover:text-purple-600">About Spik</a></li>
+          <li><a href="#academics" class="hover:text-purple-600">Academic Programs</a></li>
+          <li><a href="#admission" class="hover:text-purple-600">Online Admission</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5 class="font-bold text-slate-800 mb-3 uppercase tracking-wider text-xs">Portals Access</h5>
+        <ul class="space-y-2 text-xs font-semibold">
+          <li><a href="login.html" class="hover:text-purple-600">Parent Portal</a></li>
+          <li><a href="login.html" class="hover:text-purple-600">Student Zone</a></li>
+          <li><a href="login.html" class="hover:text-purple-600">Teacher Hub</a></li>
+          <li><a href="login.html" class="hover:text-purple-600">Admin Portal</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5 class="font-bold text-slate-800 mb-3 uppercase tracking-wider text-xs">Contact Campus</h5>
+        <p class="text-slate-400 text-xs leading-relaxed">
+          Spik International Campus<br />
+          123 Knowledge Parkway, Tech District<br />
+          Phone: +1 (800) 555-SPIK<br />
+          Email: info@spikacademy.edu
+        </p>
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto pt-5 flex flex-col md:flex-row items-center justify-between gap-3 text-xs font-semibold text-slate-400">
+      <p>© 2026 Spik International Academy. All rights reserved.</p>
+      <div class="flex items-center gap-5">
+        <a href="login.html" class="hover:text-purple-600">Parent Login</a>
+        <a href="#admission" class="hover:text-purple-600">Online Admission</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>
