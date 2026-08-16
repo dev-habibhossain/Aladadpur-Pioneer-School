@@ -10,10 +10,17 @@ export default function Footer() {
             <div className="w-9 h-9 rounded-xl bg-purple-600 flex items-center justify-center text-white">
               <Flower2 className="w-5 h-5" />
             </div>
-            <span className="font-extrabold text-slate-800 dark:text-white text-2xl">sp!k</span>
+            <div className="flex flex-col">
+              <span className="font-extrabold text-slate-800 dark:text-white text-lg leading-none">
+                Aladadpur Pioneer
+              </span>
+              <span className="text-[10px] font-bold text-purple-600 dark:text-purple-400 tracking-wider uppercase mt-0.5">
+                School & Academy
+              </span>
+            </div>
           </div>
           <p className="text-slate-500 dark:text-slate-400 text-xs leading-relaxed">
-            Spik International Academy — Nurturing academic excellence, character building, and digital innovation for K-12 students.
+            EIIN: 134250 | School Code: 4021 — Nurturing academic excellence, character building, and digital innovation for K-10 students in Bangladesh.
           </p>
         </div>
 
@@ -21,9 +28,10 @@ export default function Footer() {
           <h5 className="font-bold text-slate-800 dark:text-slate-200 mb-3 uppercase tracking-wider text-xs">Quick Links</h5>
           <ul className="space-y-2 text-xs font-semibold">
             <li><Link to="/" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">Academy Home</Link></li>
-            <li><a href="#about" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">About Spik</a></li>
-            <li><a href="#academics" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">Academic Programs</a></li>
-            <li><a href="#admission" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">Online Admission</a></li>
+            <li><Link to="/about" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">About Our School</Link></li>
+            <li><Link to="/academics" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">Academic Programs</Link></li>
+            <li><Link to="/notices" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">Official Notice Board</Link></li>
+            <li><Link to="/teachers" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">Teachers & Faculty</Link></li>
           </ul>
         </div>
 
@@ -32,27 +40,29 @@ export default function Footer() {
           <ul className="space-y-2 text-xs font-semibold">
             <li><Link to="/login" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">Parent Portal</Link></li>
             <li><Link to="/login" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">Student Zone</Link></li>
-            <li><Link to="/login" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">Teacher Hub</Link></li>
-            <li><Link to="/login" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">Admin Portal</Link></li>
+            <li><Link to="/login" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">Faculty Hub</Link></li>
+            <li><Link to="/login" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">System Admin</Link></li>
           </ul>
         </div>
 
         <div>
           <h5 className="font-bold text-slate-800 dark:text-slate-200 mb-3 uppercase tracking-wider text-xs">Contact Campus</h5>
           <p className="text-slate-500 dark:text-slate-400 text-xs leading-relaxed">
-            Spik International Campus<br />
-            123 Knowledge Parkway, Tech District<br />
-            Phone: +1 (800) 555-SPIK<br />
-            Email: info@spikacademy.edu
+            Aladadpur Pioneer High School<br />
+            Village: Aladadpur, Post: Pioneer<br />
+            Upazila / District, Bangladesh<br />
+            Phone: +880 1700-000000<br />
+            Email: info@aladadpurpioneer.edu.bd
           </p>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto pt-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs font-semibold text-slate-400 dark:text-slate-400">
-        <p>© 2026 Spik International Academy. All rights reserved.</p>
+        <p>© 2026 Aladadpur Pioneer School & Academy. All rights reserved.</p>
         <div className="flex items-center gap-5">
-          <Link to="/login" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">Parent Login</Link>
-          <a href="#admission" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">Online Admission</a>
+          <Link to="/login" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">Portal Login</Link>
+          <Link to="/admission" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">Online Admission</Link>
+          <Link to="/contact" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">Contact Us</Link>
         </div>
       </div>
     </footer>
