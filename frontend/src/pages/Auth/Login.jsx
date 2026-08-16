@@ -38,11 +38,11 @@ export default function Login() {
   });
 
   const roles = [
-    { id: 'parent', label: 'Parent', icon: Users, bg: 'bg-orange-50 text-orange-600 border-orange-200' },
-    { id: 'student', label: 'Student', icon: GraduationCap, bg: 'bg-purple-50 text-purple-600 border-purple-200' },
-    { id: 'teacher', label: 'Teacher', icon: UserCheck, bg: 'bg-sky-50 text-sky-600 border-sky-200' },
-    { id: 'admin', label: 'Admin', icon: Shield, bg: 'bg-indigo-50 text-indigo-600 border-indigo-200' },
-    { id: 'accountant', label: 'Accountant', icon: BadgeDollarSign, bg: 'bg-emerald-50 text-emerald-600 border-emerald-200' },
+    { id: 'parent', label: 'Parent', icon: Users },
+    { id: 'student', label: 'Student', icon: GraduationCap },
+    { id: 'teacher', label: 'Teacher', icon: UserCheck },
+    { id: 'admin', label: 'Admin', icon: Shield },
+    { id: 'accountant', label: 'Accountant', icon: BadgeDollarSign },
   ];
 
   const onSubmit = async (data) => {
@@ -76,26 +76,26 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-[85vh] flex items-center justify-center px-4 py-12">
+    <div className="min-h-[85vh] flex items-center justify-center px-4 py-8">
       <div className="max-w-md w-full space-y-7">
         {/* Brand Header */}
         <div className="text-center space-y-2">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-purple-600 text-white shadow-lg shadow-purple-200 mb-2">
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-purple-600 text-white shadow-lg shadow-purple-200 dark:shadow-purple-950/60 mb-2">
             <Flower2 className="w-8 h-8" />
           </div>
-          <h2 className="text-3xl font-extrabold text-slate-800 tracking-tight">
-            Welcome to <span className="text-purple-600">sp!k</span>
+          <h2 className="text-3xl font-extrabold text-slate-800 dark:text-white tracking-tight">
+            Welcome to <span className="text-purple-600 dark:text-purple-400">sp!k</span>
           </h2>
-          <p className="text-sm font-medium text-slate-500">
+          <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
             Sign in to access your institutional portal
           </p>
         </div>
 
         {/* Card Box */}
-        <div className="dashboard-card p-8 border border-slate-100 space-y-6">
+        <div className="dashboard-card p-8 border border-slate-100 dark:border-slate-800 space-y-6">
           {/* Role Selection Tabs */}
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2.5">
+            <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400 mb-2.5">
               Select Your Role Portal
             </label>
             <div className="grid grid-cols-3 gap-2">
@@ -109,8 +109,8 @@ export default function Login() {
                     onClick={() => setSelectedRole(role.id)}
                     className={`p-2.5 rounded-xl border text-xs font-bold flex flex-col items-center gap-1.5 transition-all ${
                       isSelected
-                        ? 'border-purple-600 bg-purple-50 text-purple-700 shadow-xs'
-                        : 'border-slate-100 bg-slate-50 text-slate-500 hover:border-slate-300'
+                        ? 'border-purple-600 bg-purple-50 dark:bg-purple-950/70 text-purple-700 dark:text-purple-300 shadow-xs'
+                        : 'border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/60 text-slate-500 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-700'
                     }`}
                   >
                     <IconComponent className="w-4 h-4" />
@@ -123,14 +123,14 @@ export default function Login() {
 
           {/* Feedback Messages */}
           {authError && (
-            <div className="p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-sm font-semibold flex items-center gap-2.5">
+            <div className="p-4 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/60 text-rose-700 dark:text-rose-300 text-sm font-semibold flex items-center gap-2.5">
               <ShieldAlert className="w-5 h-5 shrink-0" />
               <span>{authError}</span>
             </div>
           )}
 
           {authSuccess && (
-            <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm font-semibold flex items-center gap-2.5">
+            <div className="p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900/60 text-emerald-700 dark:text-emerald-300 text-sm font-semibold flex items-center gap-2.5">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
               <span>{authSuccess}</span>
             </div>
@@ -140,7 +140,7 @@ export default function Login() {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             {/* Email Field */}
             <div>
-              <label className="block text-sm font-bold text-slate-700 mb-1.5">
+              <label className="block text-sm font-bold text-slate-700 dark:text-slate-200 mb-1.5">
                 Email Address
               </label>
               <div className="relative">
@@ -155,10 +155,10 @@ export default function Login() {
                       message: 'Invalid email address format',
                     },
                   })}
-                  className={`w-full pl-11 pr-4 py-3 rounded-xl border text-sm font-medium focus:outline-none transition-all ${
+                  className={`w-full pl-11 pr-4 py-3 rounded-xl border text-sm font-medium focus:outline-none transition-all bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 ${
                     errors.email
-                      ? 'border-rose-400 focus:ring-2 focus:ring-rose-200'
-                      : 'border-slate-200 focus:border-purple-600 focus:ring-2 focus:ring-purple-100'
+                      ? 'border-rose-400 focus:ring-2 focus:ring-rose-200 dark:focus:ring-rose-950'
+                      : 'border-slate-200 dark:border-slate-800 focus:border-purple-600 focus:ring-2 focus:ring-purple-100 dark:focus:ring-purple-950'
                   }`}
                 />
               </div>
@@ -172,10 +172,10 @@ export default function Login() {
             {/* Password Field */}
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label className="block text-sm font-bold text-slate-700">
+                <label className="block text-sm font-bold text-slate-700 dark:text-slate-200">
                   Password
                 </label>
-                <a href="#forgot" className="text-xs font-bold text-purple-600 hover:underline">
+                <a href="#forgot" className="text-xs font-bold text-purple-600 dark:text-purple-400 hover:underline">
                   Forgot?
                 </a>
               </div>
@@ -191,16 +191,16 @@ export default function Login() {
                       message: 'Password must be at least 6 characters',
                     },
                   })}
-                  className={`w-full pl-11 pr-11 py-3 rounded-xl border text-sm font-medium focus:outline-none transition-all ${
+                  className={`w-full pl-11 pr-11 py-3 rounded-xl border text-sm font-medium focus:outline-none transition-all bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 ${
                     errors.password
-                      ? 'border-rose-400 focus:ring-2 focus:ring-rose-200'
-                      : 'border-slate-200 focus:border-purple-600 focus:ring-2 focus:ring-purple-100'
+                      ? 'border-rose-400 focus:ring-2 focus:ring-rose-200 dark:focus:ring-rose-950'
+                      : 'border-slate-200 dark:border-slate-800 focus:border-purple-600 focus:ring-2 focus:ring-purple-100 dark:focus:ring-purple-950'
                   }`}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
                 >
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
@@ -216,7 +216,7 @@ export default function Login() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-3.5 bg-purple-600 text-white font-bold text-sm rounded-xl shadow-lg shadow-purple-200 hover:bg-purple-700 transition-all flex items-center justify-center gap-2 disabled:opacity-70"
+              className="w-full py-3.5 bg-purple-600 text-white font-bold text-sm rounded-xl shadow-lg shadow-purple-200 dark:shadow-purple-950 hover:bg-purple-700 transition-all flex items-center justify-center gap-2 disabled:opacity-70"
             >
               {isSubmitting ? (
                 <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
@@ -232,10 +232,10 @@ export default function Login() {
           {/* Divider */}
           <div className="relative my-4">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-slate-200"></div>
+              <div className="w-full border-t border-slate-200 dark:border-slate-800"></div>
             </div>
             <div className="relative flex justify-center text-xs uppercase font-bold text-slate-400">
-              <span className="bg-white px-3">Or continue with</span>
+              <span className="bg-white dark:bg-[#0F172A] px-3">Or continue with</span>
             </div>
           </div>
 
@@ -243,7 +243,7 @@ export default function Login() {
           <button
             type="button"
             onClick={handleGoogleSignIn}
-            className="w-full py-3 bg-white text-slate-700 border border-slate-200 font-bold text-sm rounded-xl hover:bg-slate-50 transition-all flex items-center justify-center gap-3 shadow-xs"
+            className="w-full py-3 bg-white dark:bg-slate-950 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-800 font-bold text-sm rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 transition-all flex items-center justify-center gap-3 shadow-xs"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path
@@ -268,9 +268,9 @@ export default function Login() {
         </div>
 
         {/* Footer Prompt */}
-        <p className="text-center text-sm font-semibold text-slate-500">
+        <p className="text-center text-sm font-semibold text-slate-500 dark:text-slate-400">
           Don't have an account yet?{' '}
-          <Link to="/register" className="text-purple-600 font-bold hover:underline">
+          <Link to="/register" className="text-purple-600 dark:text-purple-400 font-bold hover:underline">
             Create an Account
           </Link>
         </p>

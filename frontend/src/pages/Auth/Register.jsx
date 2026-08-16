@@ -11,11 +11,6 @@ import {
   Flower2,
   ArrowRight,
   ShieldAlert,
-  GraduationCap,
-  Users,
-  UserCheck,
-  Shield,
-  BadgeDollarSign,
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext/AuthContext';
 
@@ -87,29 +82,29 @@ export default function Register() {
       <div className="max-w-md w-full space-y-7">
         {/* Brand Header */}
         <div className="text-center space-y-2">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-purple-600 text-white shadow-lg shadow-purple-200 mb-2">
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-purple-600 text-white shadow-lg shadow-purple-200 dark:shadow-purple-950/60 mb-2">
             <Flower2 className="w-8 h-8" />
           </div>
-          <h2 className="text-3xl font-extrabold text-slate-800 tracking-tight">
+          <h2 className="text-3xl font-extrabold text-slate-800 dark:text-white tracking-tight">
             Create Your Account
           </h2>
-          <p className="text-sm font-medium text-slate-500">
+          <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
             Join Spik International Academy portal ecosystem
           </p>
         </div>
 
         {/* Form Card */}
-        <div className="dashboard-card p-8 border border-slate-100 space-y-6">
+        <div className="dashboard-card p-8 border border-slate-100 dark:border-slate-800 space-y-6">
           {/* Error / Success Feedback */}
           {authError && (
-            <div className="p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-sm font-semibold flex items-center gap-2.5">
+            <div className="p-4 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/60 text-rose-700 dark:text-rose-300 text-sm font-semibold flex items-center gap-2.5">
               <ShieldAlert className="w-5 h-5 shrink-0" />
               <span>{authError}</span>
             </div>
           )}
 
           {authSuccess && (
-            <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm font-semibold flex items-center gap-2.5">
+            <div className="p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900/60 text-emerald-700 dark:text-emerald-300 text-sm font-semibold flex items-center gap-2.5">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
               <span>{authSuccess}</span>
             </div>
@@ -119,7 +114,7 @@ export default function Register() {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             {/* Full Name */}
             <div>
-              <label className="block text-sm font-bold text-slate-700 mb-1.5">
+              <label className="block text-sm font-bold text-slate-700 dark:text-slate-200 mb-1.5">
                 Full Name
               </label>
               <div className="relative">
@@ -134,10 +129,10 @@ export default function Register() {
                       message: 'Name must be at least 3 characters',
                     },
                   })}
-                  className={`w-full pl-11 pr-4 py-3 rounded-xl border text-sm font-medium focus:outline-none transition-all ${
+                  className={`w-full pl-11 pr-4 py-3 rounded-xl border text-sm font-medium focus:outline-none transition-all bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 ${
                     errors.name
-                      ? 'border-rose-400 focus:ring-2 focus:ring-rose-200'
-                      : 'border-slate-200 focus:border-purple-600 focus:ring-2 focus:ring-purple-100'
+                      ? 'border-rose-400 focus:ring-2 focus:ring-rose-200 dark:focus:ring-rose-950'
+                      : 'border-slate-200 dark:border-slate-800 focus:border-purple-600 focus:ring-2 focus:ring-purple-100 dark:focus:ring-purple-950'
                   }`}
                 />
               </div>
@@ -150,7 +145,7 @@ export default function Register() {
 
             {/* Email Address */}
             <div>
-              <label className="block text-sm font-bold text-slate-700 mb-1.5">
+              <label className="block text-sm font-bold text-slate-700 dark:text-slate-200 mb-1.5">
                 Email Address
               </label>
               <div className="relative">
@@ -165,10 +160,10 @@ export default function Register() {
                       message: 'Invalid email address format',
                     },
                   })}
-                  className={`w-full pl-11 pr-4 py-3 rounded-xl border text-sm font-medium focus:outline-none transition-all ${
+                  className={`w-full pl-11 pr-4 py-3 rounded-xl border text-sm font-medium focus:outline-none transition-all bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 ${
                     errors.email
-                      ? 'border-rose-400 focus:ring-2 focus:ring-rose-200'
-                      : 'border-slate-200 focus:border-purple-600 focus:ring-2 focus:ring-purple-100'
+                      ? 'border-rose-400 focus:ring-2 focus:ring-rose-200 dark:focus:ring-rose-950'
+                      : 'border-slate-200 dark:border-slate-800 focus:border-purple-600 focus:ring-2 focus:ring-purple-100 dark:focus:ring-purple-950'
                   }`}
                 />
               </div>
@@ -181,12 +176,12 @@ export default function Register() {
 
             {/* Role Selection Dropdown */}
             <div>
-              <label className="block text-sm font-bold text-slate-700 mb-1.5">
+              <label className="block text-sm font-bold text-slate-700 dark:text-slate-200 mb-1.5">
                 Account Role
               </label>
               <select
                 {...register('role', { required: 'Please select a role' })}
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm font-medium text-slate-700 focus:border-purple-600 focus:ring-2 focus:ring-purple-100 focus:outline-none bg-white"
+                className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-800 text-sm font-medium text-slate-700 dark:text-slate-200 focus:border-purple-600 focus:ring-2 focus:ring-purple-100 dark:focus:ring-purple-950 focus:outline-none bg-white dark:bg-slate-950"
               >
                 <option value="student">Student</option>
                 <option value="parent">Parent</option>
@@ -198,7 +193,7 @@ export default function Register() {
 
             {/* Phone Number */}
             <div>
-              <label className="block text-sm font-bold text-slate-700 mb-1.5">
+              <label className="block text-sm font-bold text-slate-700 dark:text-slate-200 mb-1.5">
                 Phone Number (Optional)
               </label>
               <div className="relative">
@@ -207,14 +202,14 @@ export default function Register() {
                   type="tel"
                   placeholder="+1 (800) 000-0000"
                   {...register('phone')}
-                  className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 text-sm font-medium focus:border-purple-600 focus:ring-2 focus:ring-purple-100 focus:outline-none"
+                  className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 dark:border-slate-800 text-sm font-medium bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-purple-600 focus:ring-2 focus:ring-purple-100 dark:focus:ring-purple-950 focus:outline-none"
                 />
               </div>
             </div>
 
             {/* Password */}
             <div>
-              <label className="block text-sm font-bold text-slate-700 mb-1.5">
+              <label className="block text-sm font-bold text-slate-700 dark:text-slate-200 mb-1.5">
                 Password
               </label>
               <div className="relative">
@@ -229,16 +224,16 @@ export default function Register() {
                       message: 'Password must be at least 6 characters',
                     },
                   })}
-                  className={`w-full pl-11 pr-11 py-3 rounded-xl border text-sm font-medium focus:outline-none transition-all ${
+                  className={`w-full pl-11 pr-11 py-3 rounded-xl border text-sm font-medium focus:outline-none transition-all bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 ${
                     errors.password
-                      ? 'border-rose-400 focus:ring-2 focus:ring-rose-200'
-                      : 'border-slate-200 focus:border-purple-600 focus:ring-2 focus:ring-purple-100'
+                      ? 'border-rose-400 focus:ring-2 focus:ring-rose-200 dark:focus:ring-rose-950'
+                      : 'border-slate-200 dark:border-slate-800 focus:border-purple-600 focus:ring-2 focus:ring-purple-100 dark:focus:ring-purple-950'
                   }`}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
                 >
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
@@ -252,7 +247,7 @@ export default function Register() {
 
             {/* Confirm Password */}
             <div>
-              <label className="block text-sm font-bold text-slate-700 mb-1.5">
+              <label className="block text-sm font-bold text-slate-700 dark:text-slate-200 mb-1.5">
                 Confirm Password
               </label>
               <div className="relative">
@@ -265,10 +260,10 @@ export default function Register() {
                     validate: (value) =>
                       value === passwordValue || 'Passwords do not match',
                   })}
-                  className={`w-full pl-11 pr-4 py-3 rounded-xl border text-sm font-medium focus:outline-none transition-all ${
+                  className={`w-full pl-11 pr-4 py-3 rounded-xl border text-sm font-medium focus:outline-none transition-all bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 ${
                     errors.confirmPassword
-                      ? 'border-rose-400 focus:ring-2 focus:ring-rose-200'
-                      : 'border-slate-200 focus:border-purple-600 focus:ring-2 focus:ring-purple-100'
+                      ? 'border-rose-400 focus:ring-2 focus:ring-rose-200 dark:focus:ring-rose-950'
+                      : 'border-slate-200 dark:border-slate-800 focus:border-purple-600 focus:ring-2 focus:ring-purple-100 dark:focus:ring-purple-950'
                   }`}
                 />
               </div>
@@ -283,7 +278,7 @@ export default function Register() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-3.5 bg-purple-600 text-white font-bold text-sm rounded-xl shadow-lg shadow-purple-200 hover:bg-purple-700 transition-all flex items-center justify-center gap-2 disabled:opacity-70 mt-2"
+              className="w-full py-3.5 bg-purple-600 text-white font-bold text-sm rounded-xl shadow-lg shadow-purple-200 dark:shadow-purple-950 hover:bg-purple-700 transition-all flex items-center justify-center gap-2 disabled:opacity-70 mt-2"
             >
               {isSubmitting ? (
                 <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
@@ -299,10 +294,10 @@ export default function Register() {
           {/* Divider */}
           <div className="relative my-4">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-slate-200"></div>
+              <div className="w-full border-t border-slate-200 dark:border-slate-800"></div>
             </div>
             <div className="relative flex justify-center text-xs uppercase font-bold text-slate-400">
-              <span className="bg-white px-3">Or sign up with</span>
+              <span className="bg-white dark:bg-[#0F172A] px-3">Or sign up with</span>
             </div>
           </div>
 
@@ -310,7 +305,7 @@ export default function Register() {
           <button
             type="button"
             onClick={handleGoogleSignIn}
-            className="w-full py-3 bg-white text-slate-700 border border-slate-200 font-bold text-sm rounded-xl hover:bg-slate-50 transition-all flex items-center justify-center gap-3 shadow-xs"
+            className="w-full py-3 bg-white dark:bg-slate-950 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-800 font-bold text-sm rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 transition-all flex items-center justify-center gap-3 shadow-xs"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path
@@ -335,9 +330,9 @@ export default function Register() {
         </div>
 
         {/* Footer Prompt */}
-        <p className="text-center text-sm font-semibold text-slate-500">
+        <p className="text-center text-sm font-semibold text-slate-500 dark:text-slate-400">
           Already have an account?{' '}
-          <Link to="/login" className="text-purple-600 font-bold hover:underline">
+          <Link to="/login" className="text-purple-600 dark:text-purple-400 font-bold hover:underline">
             Sign In Here
           </Link>
         </p>
