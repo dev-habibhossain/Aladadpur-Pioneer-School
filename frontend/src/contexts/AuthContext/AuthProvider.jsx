@@ -1,40 +1,58 @@
 import { useState, useEffect } from 'react';
 import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  signOut,
-  onAuthStateChanged,
-} from 'firebase/auth';
-import { auth, googleProvider } from '../../firebase/firebase.init';
+  loginWithEmailPassword,
+  signupWithEmailPassword,
+  loginWithGoogle,
+  logoutUser,
+  onAuthStateChange,
+} from '../../services/authService';
 import { AuthContext } from './AuthContext';
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [backendUser, setBackendUser] = useState(() => {
+    const saved = localStorage.getItem('spik_user');
+    return saved ? JSON.parse(saved) : null;
+  });
   const [loading, setLoading] = useState(true);
 
-  const registerUser = (email, password) => {
+  const login = async (email, password) => {
     setLoading(true);
-    return createUserWithEmailAndPassword(auth, email, password);
+    const result = await loginWithEmailPassword(email, password);
+    if (result.backendUser) {
+      setBackendUser(result.backendUser);
+    }
+    setLoading(false);
+    return result;
   };
 
-  const signInUser = (email, password) => {
+  const register = async (userData) => {
     setLoading(true);
-    return signInWithEmailAndPassword(auth, email, password);
+    const result = await signupWithEmailPassword(userData);
+    if (result.backendUser) {
+      setBackendUser(result.backendUser);
+    }
+    setLoading(false);
+    return result;
   };
 
-  const signInWithGoogle = () => {
+  const googleLogin = async () => {
     setLoading(true);
-    return signInWithPopup(auth, googleProvider);
+    const result = await loginWithGoogle();
+    setLoading(false);
+    return result;
   };
 
-  const logoutUser = () => {
+  const logout = async () => {
     setLoading(true);
-    return signOut(auth);
+    await logoutUser();
+    setUser(null);
+    setBackendUser(null);
+    setLoading(false);
   };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChange((currentUser) => {
       setUser(currentUser);
       setLoading(false);
     });
@@ -44,11 +62,12 @@ const AuthProvider = ({ children }) => {
 
   const authInfo = {
     user,
+    backendUser,
     loading,
-    registerUser,
-    signInUser,
-    signInWithGoogle,
-    logoutUser,
+    login,
+    register,
+    googleLogin,
+    logout,
   };
 
   return (
