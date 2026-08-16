@@ -20,24 +20,34 @@ const studentSchema = new mongoose.Schema(
     },
     dateOfBirth: {
       type: Date,
+      required: [true, 'Date of birth is required'],
     },
     gender: {
       type: String,
       enum: ['male', 'female', 'other'],
+      required: [true, 'Gender is required'],
     },
-    class: {
-      type: String,
-      trim: true,
-      default: '',
+    sessionId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'AcademicSession',
     },
-    section: {
-      type: String,
-      trim: true,
-      default: '',
+    classId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Class',
+    },
+    sectionId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Section',
     },
     rollNumber: {
       type: Number,
     },
+    guardianIds: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
     status: {
       type: String,
       enum: ['active', 'inactive', 'graduated', 'transferred'],
@@ -47,6 +57,7 @@ const studentSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+studentSchema.index({ classId: 1, sectionId: 1, sessionId: 1 });
 studentSchema.index({ admissionNumber: 1 }, { unique: true });
 
 const Student = mongoose.model('Student', studentSchema);
