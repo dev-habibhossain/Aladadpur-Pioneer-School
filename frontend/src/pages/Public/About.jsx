@@ -1,7 +1,21 @@
-import { Award, BookOpen, Building2, CheckCircle2, ShieldCheck, Target, Users, HeartHandshake } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Award, Building2, CheckCircle2, Target, HeartHandshake } from 'lucide-react';
 import { Link } from 'react-router';
+import { fetchPublicInfo } from '../../services/publicService';
 
 export default function About() {
+  const [publicData, setPublicData] = useState(null);
+
+  useEffect(() => {
+    const loadInfo = async () => {
+      const data = await fetchPublicInfo();
+      if (data) {
+        setPublicData(data);
+      }
+    };
+    loadInfo();
+  }, []);
+
   return (
     <div className="max-w-7xl mx-auto px-6 sm:px-9 py-10 space-y-12">
       {/* Header Banner */}
@@ -9,13 +23,13 @@ export default function About() {
         <div className="max-w-3xl space-y-4 relative z-10">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-500/20 text-purple-200 text-xs font-bold border border-purple-400/30">
             <Building2 className="w-4 h-4 text-purple-300" />
-            <span>EIIN: 134250 | School Code: 4021</span>
+            <span>EIIN: {publicData?.eiin || '134250'} | School Code: {publicData?.schoolCode || '4021'}</span>
           </div>
           <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight">
-            About Aladadpur Pioneer School
+            About {publicData?.schoolName || 'Aladadpur Pioneer School'}
           </h1>
           <p className="text-purple-100 text-sm md:text-base leading-relaxed">
-            Established with a commitment to academic brilliance, moral integrity, and modern technological education in Bangladesh. We cultivate future leaders with strong traditional values and global perspectives.
+            Established in {publicData?.established || 2010} with a commitment to academic brilliance, moral integrity, and modern technological education in Bangladesh. We cultivate future leaders with strong traditional values and global perspectives.
           </p>
         </div>
       </div>
@@ -45,7 +59,7 @@ export default function About() {
             "Empowering Students to Achieve Academic Excellence & Higher Moral Character"
           </h2>
           <p className="text-slate-600 dark:text-slate-300 text-sm md:text-base leading-relaxed">
-            Welcome to Aladadpur Pioneer School. Our institution stands as a beacon of quality education, blending the national NCTB curriculum with modern STEM initiatives, computer literacy, and character development.
+            Welcome to {publicData?.schoolName || 'Aladadpur Pioneer School'}. Our institution stands as a beacon of quality education, blending the national NCTB curriculum with modern STEM initiatives, computer literacy, and character development.
           </p>
           <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
             We provide a secure, digitalized, and nurturing environment where every child receives personalized attention, ensuring success in board examinations (PSC, JSC, SSC) and beyond.
@@ -53,11 +67,15 @@ export default function About() {
 
           <div className="grid grid-cols-2 gap-4 pt-3">
             <div className="p-4 rounded-xl bg-purple-50 dark:bg-purple-950/40 border border-purple-100 dark:border-purple-900/50">
-              <h4 className="text-2xl font-extrabold text-purple-700 dark:text-purple-300">100%</h4>
+              <h4 className="text-2xl font-extrabold text-purple-700 dark:text-purple-300">
+                {publicData?.stats?.sscPassRate || '100%'}
+              </h4>
               <p className="text-xs font-bold text-slate-600 dark:text-slate-400">SSC Board Pass Rate</p>
             </div>
             <div className="p-4 rounded-xl bg-sky-50 dark:bg-sky-950/40 border border-sky-100 dark:border-sky-900/50">
-              <h4 className="text-2xl font-extrabold text-sky-700 dark:text-sky-300">45+</h4>
+              <h4 className="text-2xl font-extrabold text-sky-700 dark:text-sky-300">
+                {publicData?.stats?.expertEducators ? `${publicData.stats.expertEducators}+` : '45+'}
+              </h4>
               <p className="text-xs font-bold text-slate-600 dark:text-slate-400">Experienced Teachers</p>
             </div>
           </div>
@@ -121,7 +139,7 @@ export default function About() {
       <div className="p-8 rounded-2xl bg-purple-600 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
         <div>
           <h3 className="text-xl font-bold">Want to Enroll Your Child in Our Academy?</h3>
-          <p className="text-sm text-purple-100">Admissions for Play to Class 9 are currently open for session 2026-2027.</p>
+          <p className="text-sm text-purple-100">Admissions for Play to Class 9 are currently open for session {publicData?.session || '2026-2027'}.</p>
         </div>
         <Link
           to="/admission"

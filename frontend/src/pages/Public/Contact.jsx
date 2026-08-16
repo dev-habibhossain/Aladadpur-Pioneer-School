@@ -1,9 +1,22 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Mail, MapPin, Phone, Clock, Send, CheckCircle2, Building2, HelpCircle } from 'lucide-react';
+import { Mail, MapPin, Phone, Clock, Send, CheckCircle2, Building2, ShieldAlert } from 'lucide-react';
+import { submitContactInquiry, fetchPublicInfo } from '../../services/publicService';
 
 export default function Contact() {
   const [formSuccess, setFormSuccess] = useState('');
+  const [formError, setFormError] = useState('');
+  const [publicData, setPublicData] = useState(null);
+
+  useEffect(() => {
+    const loadInfo = async () => {
+      const data = await fetchPublicInfo();
+      if (data) {
+        setPublicData(data);
+      }
+    };
+    loadInfo();
+  }, []);
 
   const {
     register,
@@ -21,9 +34,19 @@ export default function Contact() {
   });
 
   const onSubmit = async (data) => {
-    await new Promise((res) => setTimeout(res, 800));
-    setFormSuccess(`Thank you ${data.name}! Your message regarding "${data.subject}" has been sent to Aladadpur Pioneer School administration.`);
-    reset();
+    setFormError('');
+    setFormSuccess('');
+
+    try {
+      const result = await submitContactInquiry(data);
+      setFormSuccess(
+        result.message ||
+          `Thank you ${data.name}! Your message regarding "${data.subject}" has been stored in our backend system.`
+      );
+      reset();
+    } catch (err) {
+      setFormError(err.message || 'Failed to submit contact message. Please try again.');
+    }
   };
 
   return (
@@ -59,10 +82,11 @@ export default function Contact() {
                 <div>
                   <h4 className="text-sm font-bold text-slate-800 dark:text-slate-100">School Campus Address</h4>
                   <p className="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed mt-0.5">
-                    Aladadpur Pioneer High School & Academy<br />
-                    Village: Aladadpur, Post Office: Pioneer<br />
-                    Upazila / District, Bangladesh<br />
-                    <span className="font-bold text-purple-600 dark:text-purple-400">EIIN: 134250 | School Code: 4021</span>
+                    {publicData?.schoolName || 'Aladadpur Pioneer High School & Academy'}<br />
+                    {publicData?.contact?.address || 'Village: Aladadpur, Post: Pioneer, Upazila/District, Bangladesh'}<br />
+                    <span className="font-bold text-purple-600 dark:text-purple-400">
+                      EIIN: {publicData?.eiin || '134250'} | School Code: {publicData?.schoolCode || '4021'}
+                    </span>
                   </p>
                 </div>
               </div>
@@ -74,8 +98,8 @@ export default function Contact() {
                 <div>
                   <h4 className="text-sm font-bold text-slate-800 dark:text-slate-100">Helpline & Mobile</h4>
                   <p className="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed mt-0.5">
-                    Principal Office: +880 1700-000000<br />
-                    Admission Helpdesk: +880 1800-000000
+                    Principal Office: {publicData?.contact?.phone || '+880 1700-000000'}<br />
+                    Admission Helpdesk: {publicData?.contact?.admissionHotline || '+880 1800-000000'}
                   </p>
                 </div>
               </div>
@@ -87,8 +111,8 @@ export default function Contact() {
                 <div>
                   <h4 className="text-sm font-bold text-slate-800 dark:text-slate-100">Email Contacts</h4>
                   <p className="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed mt-0.5">
-                    General: info@aladadpurpioneer.edu.bd<br />
-                    Admissions: admission@aladadpurpioneer.edu.bd
+                    General: {publicData?.contact?.email || 'info@aladadpurpioneer.edu.bd'}<br />
+                    Admissions: {publicData?.contact?.admissionEmail || 'admission@aladadpurpioneer.edu.bd'}
                   </p>
                 </div>
               </div>
@@ -100,9 +124,7 @@ export default function Contact() {
                 <div>
                   <h4 className="text-sm font-bold text-slate-800 dark:text-slate-100">Office Hours</h4>
                   <p className="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed mt-0.5">
-                    Sunday – Thursday: 8:00 AM – 3:30 PM<br />
-                    Saturday: 9:00 AM – 1:00 PM (Admin Only)<br />
-                    Friday: Closed
+                    {publicData?.contact?.officeHours || 'Sun - Thu: 8:00 AM - 3:30 PM'}
                   </p>
                 </div>
               </div>
@@ -119,6 +141,13 @@ export default function Contact() {
                 Fill out the message form below and our administration will reply promptly.
               </p>
             </div>
+
+            {formError && (
+              <div className="p-4 rounded-xl bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-900 text-rose-700 dark:text-rose-300 text-xs font-semibold flex items-center gap-2.5">
+                <ShieldAlert className="w-5 h-5 shrink-0 text-rose-500" />
+                <span>{formError}</span>
+              </div>
+            )}
 
             {formSuccess && (
               <div className="p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-900 text-emerald-800 dark:text-emerald-200 text-sm font-semibold flex items-center gap-3">
@@ -201,13 +230,13 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-3.5 bg-purple-600 text-white font-bold text-xs rounded-xl shadow-lg shadow-purple-200 dark:shadow-purple-950/60 hover:bg-purple-700 transition-all flex items-center justify-center gap-2 disabled:opacity-70"
+                className="w-full py-3.5 bg-purple-600 text-white font-bold text-xs rounded-xl shadow-lg shadow-purple-200 dark:shadow-purple-950/60 hover:bg-purple-700 transition-all flex items-center justify-center gap-2 disabled:opacity-70 cursor-pointer"
               >
                 {isSubmitting ? (
                   <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
                 ) : (
                   <>
-                    <span>Send Message to School</span>
+                    <span>Send Message to Database</span>
                     <Send className="w-4 h-4" />
                   </>
                 )}

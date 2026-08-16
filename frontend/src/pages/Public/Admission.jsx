@@ -1,9 +1,22 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { GraduationCap, CheckCircle2, FileCheck, Send, ShieldAlert, Phone, HelpCircle } from 'lucide-react';
+import { submitAdmissionInquiry, fetchPublicInfo } from '../../services/publicService';
 
 export default function Admission() {
   const [formSuccess, setFormSuccess] = useState('');
+  const [formError, setFormError] = useState('');
+  const [publicData, setPublicData] = useState(null);
+
+  useEffect(() => {
+    const loadInfo = async () => {
+      const data = await fetchPublicInfo();
+      if (data) {
+        setPublicData(data);
+      }
+    };
+    loadInfo();
+  }, []);
 
   const {
     register,
@@ -13,7 +26,6 @@ export default function Admission() {
   } = useForm({
     defaultValues: {
       studentName: '',
-      gender: 'Male',
       targetClass: 'Class 6',
       parentName: '',
       parentPhone: '',
@@ -23,10 +35,19 @@ export default function Admission() {
   });
 
   const onSubmit = async (data) => {
-    // Simulate admission inquiry submission
-    await new Promise((res) => setTimeout(res, 800));
-    setFormSuccess(`Thank you ${data.parentName}! Your admission inquiry for ${data.studentName} (${data.targetClass}) has been received. Our admission officer will call ${data.parentPhone} shortly.`);
-    reset();
+    setFormError('');
+    setFormSuccess('');
+
+    try {
+      const result = await submitAdmissionInquiry(data);
+      setFormSuccess(
+        result.message ||
+          `Thank you ${data.parentName}! Your admission inquiry for ${data.studentName} (${data.targetClass}) has been submitted to MongoDB database.`
+      );
+      reset();
+    } catch (err) {
+      setFormError(err.message || 'Failed to submit admission inquiry. Please try again.');
+    }
   };
 
   const seats = [
@@ -44,13 +65,13 @@ export default function Admission() {
         <div className="max-w-3xl space-y-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-500/20 text-purple-200 text-xs font-bold border border-purple-400/30">
             <GraduationCap className="w-4 h-4 text-purple-300" />
-            <span>Academic Session 2026-2027</span>
+            <span>Academic Session {publicData?.session || '2026-2027'}</span>
           </div>
           <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight">
             Online Admission Circular & Application
           </h1>
           <p className="text-purple-100 text-sm md:text-base leading-relaxed">
-            Welcome prospective parents and students! Submit your online admission inquiry below to secure a seat at Aladadpur Pioneer School.
+            Welcome prospective parents and students! Submit your online admission inquiry below to secure a seat at {publicData?.schoolName || 'Aladadpur Pioneer School'}.
           </p>
         </div>
       </div>
@@ -60,7 +81,7 @@ export default function Admission() {
         {/* Left Column: Seats & Requirements */}
         <div className="lg:col-span-5 space-y-7">
           <div className="dashboard-card p-7 border border-slate-100 dark:border-slate-800 space-y-5">
-            <h3 className="text-xl font-bold text-slate-800 dark:text-white">Seat Availability (2026-2027)</h3>
+            <h3 className="text-xl font-bold text-slate-800 dark:text-white">Seat Availability ({publicData?.session || '2026-2027'})</h3>
             <div className="space-y-3">
               {seats.map((item, idx) => (
                 <div
@@ -103,6 +124,22 @@ export default function Admission() {
               </li>
             </ul>
           </div>
+
+          {/* Admission Hotline */}
+          <div className="p-6 rounded-2xl bg-purple-50 dark:bg-purple-950/40 border border-purple-100 dark:border-purple-900/50 space-y-2">
+            <div className="flex items-center gap-2 text-purple-600 dark:text-purple-400 font-bold text-sm">
+              <Phone className="w-4 h-4" /> Admission Desk Hotline
+            </div>
+            <p className="text-xs text-slate-600 dark:text-slate-300 font-medium">
+              Call our admission officers directly for queries or campus tours:
+            </p>
+            <a
+              href={`tel:${publicData?.contact?.admissionHotline || '+8801800000000'}`}
+              className="text-base font-extrabold text-purple-700 dark:text-purple-300 block"
+            >
+              {publicData?.contact?.admissionHotline || '+880 1800-000000'}
+            </a>
+          </div>
         </div>
 
         {/* Right Column: Admission Form */}
@@ -114,6 +151,13 @@ export default function Admission() {
                 Fill in student and guardian details for priority seat booking
               </p>
             </div>
+
+            {formError && (
+              <div className="p-4 rounded-xl bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-900 text-rose-700 dark:text-rose-300 text-xs font-semibold flex items-center gap-2.5">
+                <ShieldAlert className="w-5 h-5 shrink-0 text-rose-500" />
+                <span>{formError}</span>
+              </div>
+            )}
 
             {formSuccess && (
               <div className="p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-900 text-emerald-800 dark:text-emerald-200 text-sm font-semibold flex items-center gap-3">
@@ -189,12 +233,24 @@ export default function Admission() {
                     placeholder="01700-000000"
                     {...register('parentPhone', {
                       required: 'Mobile number is required',
-                      pattern: { value: /^01[3-9]\d{8}$/, message: 'Enter valid Bangladeshi mobile number (01xxxxxxxxx)' },
                     })}
                     className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-xs font-medium bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 focus:outline-none focus:border-purple-600"
                   />
                   {errors.parentPhone && <p className="text-xs text-rose-500 mt-1">{errors.parentPhone.message}</p>}
                 </div>
+              </div>
+
+              {/* Guardian Email */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">
+                  Guardian Email (Optional)
+                </label>
+                <input
+                  type="email"
+                  placeholder="parent@example.com"
+                  {...register('guardianEmail')}
+                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-xs font-medium bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 focus:outline-none focus:border-purple-600"
+                />
               </div>
 
               {/* Present Address */}
@@ -213,13 +269,13 @@ export default function Admission() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-3.5 bg-purple-600 text-white font-bold text-xs rounded-xl shadow-lg shadow-purple-200 dark:shadow-purple-950/60 hover:bg-purple-700 transition-all flex items-center justify-center gap-2 disabled:opacity-70"
+                className="w-full py-3.5 bg-purple-600 text-white font-bold text-xs rounded-xl shadow-lg shadow-purple-200 dark:shadow-purple-950/60 hover:bg-purple-700 transition-all flex items-center justify-center gap-2 disabled:opacity-70 cursor-pointer"
               >
                 {isSubmitting ? (
                   <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
                 ) : (
                   <>
-                    <span>Submit Admission Inquiry</span>
+                    <span>Submit Admission Inquiry to Database</span>
                     <Send className="w-4 h-4" />
                   </>
                 )}

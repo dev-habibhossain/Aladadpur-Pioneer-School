@@ -1,7 +1,21 @@
-import { BookOpen, Calendar, Clock, Download, GraduationCap, Award, FileText, CheckCircle } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { BookOpen, Award, FileText, CheckCircle, Download } from 'lucide-react';
 import { Link } from 'react-router';
+import { fetchPublicInfo } from '../../services/publicService';
 
 export default function Academics() {
+  const [publicData, setPublicData] = useState(null);
+
+  useEffect(() => {
+    const loadInfo = async () => {
+      const data = await fetchPublicInfo();
+      if (data) {
+        setPublicData(data);
+      }
+    };
+    loadInfo();
+  }, []);
+
   const classes = [
     {
       level: 'Pre-Primary Section',
@@ -34,10 +48,10 @@ export default function Academics() {
   ];
 
   const routines = [
-    { name: 'Class 1-5 Daily Class Routine 2026', size: '1.2 MB', type: 'PDF' },
-    { name: 'Class 6-8 Project Assessment Syllabus 2026', size: '2.4 MB', type: 'PDF' },
-    { name: 'Class 9-10 SSC Model Exam Schedule 2026', size: '850 KB', type: 'PDF' },
-    { name: 'Annual Academic Calendar 2026', size: '3.1 MB', type: 'PDF' },
+    { name: `Class 1-5 Daily Class Routine ${publicData?.session || '2026'}`, size: '1.2 MB', type: 'PDF' },
+    { name: `Class 6-8 Project Assessment Syllabus ${publicData?.session || '2026'}`, size: '2.4 MB', type: 'PDF' },
+    { name: `Class 9-10 SSC Model Exam Schedule ${publicData?.session || '2026'}`, size: '850 KB', type: 'PDF' },
+    { name: `Annual Academic Calendar ${publicData?.session || '2026'}`, size: '3.1 MB', type: 'PDF' },
   ];
 
   return (
@@ -53,7 +67,7 @@ export default function Academics() {
             Academic Excellence & Curriculum
           </h1>
           <p className="text-purple-100 text-sm md:text-base leading-relaxed">
-            Discover our comprehensive educational structure from Nursery to SSC Level, designed to foster deep understanding, analytical thinking, and board exam success.
+            Discover {publicData?.schoolName || 'Aladadpur Pioneer School'}'s comprehensive educational structure from Nursery to SSC Level, designed to foster deep understanding, analytical thinking, and board exam success.
           </p>
         </div>
       </div>

@@ -36,6 +36,26 @@ const userSchema = new mongoose.Schema(
       trim: true,
       default: '',
     },
+    designation: {
+      type: String,
+      default: '',
+      trim: true,
+    },
+    department: {
+      type: String,
+      default: '',
+      trim: true,
+    },
+    qualifications: {
+      type: String,
+      default: '',
+      trim: true,
+    },
+    experience: {
+      type: String,
+      default: '',
+      trim: true,
+    },
     avatar: {
       url: { type: String, default: '' },
       publicId: { type: String, default: '' },
