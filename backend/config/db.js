@@ -11,10 +11,18 @@ const connectDB = async () => {
     }
 
     const conn = await mongoose.connect(mongoURI);
-    console.log(`[Database] MongoDB Connected Successfully: ${conn.connection.host}`);
+    console.log(`[Database] MongoDB Connected Successfully! Host: ${conn.connection.host} | DB Name: ${conn.connection.name}`);
+    
+    // Connection Event Listeners
+    mongoose.connection.on('error', (err) => {
+      console.error(`[Database Error] Mongoose runtime connection error: ${err}`);
+    });
+
+    mongoose.connection.on('disconnected', () => {
+      console.warn('[Database Warning] Mongoose disconnected from MongoDB');
+    });
   } catch (error) {
     console.error(`[Database Error] MongoDB Connection Failed: ${error.message}`);
-    // Log helpful diagnostic tip if connection fails
     if (error.message.includes('ECONNREFUSED')) {
       console.error('[Database Tip] Ensure local MongoDB daemon (mongod) is running or check your MONGODB_URI setting in .env');
     }
